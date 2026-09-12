@@ -17,9 +17,9 @@
     <nav class="p-5 flex flex-col md:flex-row justify-between items-center w-11/12 max-w-[1400px] mx-auto border-b border-slate-800 sticky top-0 bg-slate-900/90 backdrop-blur z-50">
         <h1 class="text-xl font-bold text-teal-400 mb-4 md:mb-0">Financial<span class="text-white"> Dashboard</span></h1>
         <div class="flex flex-wrap justify-center gap-4 text-sm md:text-base">
-            <a href="#input-section" class="hover:text-teal-400 transition">Input Harian & Bulanan</a>
+            <a href="#input-section" class="hover:text-teal-400 transition">Input Harian & Periode</a>
             <a href="#target-section" class="hover:text-teal-400 transition">Target & Rekap Rinci</a>
-            <a href="#grand-total-section" class="hover:text-teal-400 transition">Grand Total 6 Bulan</a>
+            <a href="#grand-total-section" class="hover:text-teal-400 transition">Grand Total Periode</a>
         </div>
     </nav>
 
@@ -28,51 +28,51 @@
         
         <!-- Header -->
         <div class="mb-10 text-center md:text-left">
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Dashboard Magang <span class="text-teal-400">Periode (Sept - Feb)</span></h2>
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Dashboard Magang <span class="text-teal-400">Sistem Periode Lengkap</span></h2>
             <p class="text-slate-400 text-sm md:text-base">
-                Pilih bulan dan tanggal, input pengeluaran harian, atur parameter bulanan, dan pantau seluruh rekapitulasi secara presisi.
+                Pilih bulan kalender dan tanggal, input pengeluaran harian, atur parameter per periode (Periode 2 s.d. Selesai Magang).
             </p>
         </div>
 
-        <!-- Setting Parameter Manual per Bulan (*Field Bintang) -->
+        <!-- Setting Parameter Manual per Periode Magang -->
         <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl mb-10">
             <h3 class="text-xl font-bold text-teal-400 mb-4 flex items-center justify-between">
-                <span>Parameter Bulanan (*Field Manual per Bulan)</span>
-                <span class="text-xs bg-teal-400/10 text-teal-400 px-2.5 py-1 rounded">Atur Sesuai Bulan</span>
+                <span>Parameter Periode Magang (*Field Manual per Periode)</span>
+                <span class="text-xs bg-teal-400/10 text-teal-400 px-2.5 py-1 rounded">Gaji Terakhir Tanpa Pengeluaran</span>
             </h3>
 
             <div class="mb-6">
-                <label class="block text-slate-400 text-xs mb-1">Pilih Bulan Pengaturan:</label>
-                <select id="selectBulanParam" onchange="loadMonthlyParams()" class="w-full md:w-1/3 bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-slate-200 outline-none focus:border-teal-400 font-bold">
-                    <option value="September">September</option>
-                    <option value="Oktober">Oktober</option>
-                    <option value="November">November</option>
-                    <option value="Desember">Desember</option>
-                    <option value="Januari">Januari</option>
-                    <option value="Februari">Februari</option>
+                <label class="block text-slate-400 text-xs mb-1">Pilih Periode Magang:</label>
+                <select id="selectPeriodeParam" onchange="loadPeriodeParams()" class="w-full md:w-1/3 bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-slate-200 outline-none focus:border-teal-400 font-bold">
+                    <option value="Periode 2">Periode 2 (10 Sep - 9 Okt)</option>
+                    <option value="Periode 3">Periode 3 (10 Okt - 9 Nov)</option>
+                    <option value="Periode 4">Periode 4 (10 Nov - 9 Des)</option>
+                    <option value="Periode 5">Periode 5 (10 Des - 9 Jan)</option>
+                    <option value="Periode 6">Periode 6 (10 Jan - 9 Feb)</option>
+                    <option value="Selesai Magang">Selesai Magang (10 Feb 2027 - Gajian)</option>
                 </select>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
                 <div>
                     <label class="block text-slate-400 mb-1">Pemasukan (*):</label>
-                    <input type="number" id="inPemasukan" value="5999443" oninput="saveMonthlyParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
+                    <input type="number" id="inPemasukan" value="5999443" oninput="savePeriodeParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-slate-400 mb-1">Kos (*):</label>
-                    <input type="number" id="inKos" value="0" oninput="saveMonthlyParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
+                    <input type="number" id="inKos" value="0" oninput="savePeriodeParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-slate-400 mb-1">Galon (*):</label>
-                    <input type="number" id="inGalon" value="0" oninput="saveMonthlyParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
+                    <input type="number" id="inGalon" value="0" oninput="savePeriodeParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-slate-400 mb-1">Kuota (*):</label>
-                    <input type="number" id="inKuota" value="0" oninput="saveMonthlyParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
+                    <input type="number" id="inKuota" value="0" oninput="savePeriodeParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-slate-400 mb-1">Token Listrik (Jml):</label>
-                    <input type="number" id="inToken" value="0" oninput="saveMonthlyParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
+                    <input type="number" id="inToken" value="0" oninput="savePeriodeParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
                 
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label class="block text-slate-400 text-xs mb-1">Pilih Bulan:</label>
+                        <label class="block text-slate-400 text-xs mb-1">Pilih Bulan Kalender:</label>
                         <select id="selectBulanHarian" onchange="updateDateDropdown(); loadFormDate();" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-slate-200 outline-none focus:border-teal-400">
                             <option value="September">September</option>
                             <option value="Oktober">Oktober</option>
@@ -96,7 +96,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-slate-400 text-xs mb-1">Tanggal (Sesuai Bulan):</label>
+                        <label class="block text-slate-400 text-xs mb-1">Tanggal:</label>
                         <select id="selectTgl" onchange="loadFormDate()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-slate-200 outline-none focus:border-teal-400">
                             <!-- Dynamic days -->
                         </select>
@@ -135,33 +135,33 @@
             <!-- Status Saldo -->
             <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl flex flex-col justify-between">
                 <div>
-                    <h3 class="text-xl font-bold text-teal-400 mb-4">Status Saldo Bulan Ini</h3>
+                    <h3 class="text-xl font-bold text-teal-400 mb-4">Status Saldo Periode Ini</h3>
                     <div class="space-y-4 text-sm">
                         <div class="flex justify-between border-b border-slate-700/50 pb-3">
-                            <span class="text-slate-400">Pemasukan Bulan Ini:</span>
+                            <span class="text-slate-400">Pemasukan Periode Ini:</span>
                             <span id="dispPemasukan" class="font-bold text-teal-400">Rp 0</span>
                         </div>
                         <div class="flex justify-between border-b border-slate-700/50 pb-3">
-                            <span class="text-slate-400">Total Keluar Bulan Ini:</span>
+                            <span class="text-slate-400">Total Keluar Periode Ini:</span>
                             <span id="dispTotalKeluar" class="font-bold text-rose-400">Rp 0</span>
                         </div>
                         <div class="flex justify-between items-center pt-1">
-                            <span class="text-slate-200 font-bold">Sisa Bersih Bulan Ini:</span>
+                            <span class="text-slate-200 font-bold">Sisa Bersih Periode Ini:</span>
                             <span id="dispBersih" class="text-xl font-extrabold text-teal-300">Rp 0</span>
                         </div>
                     </div>
                 </div>
                 <div class="bg-slate-900/60 p-4 rounded-lg border border-slate-700/50 mt-6">
-                    <p class="text-xs text-slate-400 italic">💡 Info: Hari otomatis menyesuaikan (Sept:30, Okt:31, Nov:30, Des:31, Jan:31, Feb:10).</p>
+                    <p class="text-xs text-slate-400 italic">💡 Info: Rekap otomatis dihitung dari Periode 2 sampai Selesai Magang (10 Feb 2027).</p>
                 </div>
             </div>
 
         </div>
 
-        <!-- 1. TABEL TARGET VS REALISASI RINCI (SEPT - FEB) -->
+        <!-- 1. TABEL TARGET VS REALISASI RINCI -->
         <section id="target-section" class="mb-12">
-            <h3 class="text-2xl font-bold text-teal-400 mb-2">Target vs Realisasi (Sept - Feb) - Rinci</h3>
-            <p class="text-slate-400 text-sm mb-6">Rekapitulasi lengkap rincian pemasukan, pengeluaran kategori, dan sisa saldo per bulan.</p>
+            <h3 class="text-2xl font-bold text-teal-400 mb-2">Target vs Realisasi (Rinci)</h3>
+            <p class="text-slate-400 text-sm mb-6">Rekapitulasi lengkap rincian pemasukan, pengeluaran kategori, dan sisa saldo per periode.</p>
 
             <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-xl">
                 <div class="overflow-x-auto">
@@ -169,13 +169,13 @@
                         <thead>
                             <tr class="bg-slate-700/50 border-b border-slate-700 text-teal-300">
                                 <th class="p-4">Jenis (Target / Realisasi)</th>
-                                <th class="p-4 text-center bg-amber-500/10 text-amber-300">Target /Bln</th>
-                                <th class="p-4 text-center">September</th>
-                                <th class="p-4 text-center">Oktober</th>
-                                <th class="p-4 text-center">November</th>
-                                <th class="p-4 text-center">Desember</th>
-                                <th class="p-4 text-center">Januari</th>
-                                <th class="p-4 text-center">Februari</th>
+                                <th class="p-4 text-center bg-amber-500/10 text-amber-300">Target /Periode</th>
+                                <th class="p-4 text-center">Periode 2<br><span class="text-xs text-slate-400">10 Sep - 9 Okt</span></th>
+                                <th class="p-4 text-center">Periode 3<br><span class="text-xs text-slate-400">10 Okt - 9 Nov</span></th>
+                                <th class="p-4 text-center">Periode 4<br><span class="text-xs text-slate-400">10 Nov - 9 Des</span></th>
+                                <th class="p-4 text-center">Periode 5<br><span class="text-xs text-slate-400">10 Des - 9 Jan</span></th>
+                                <th class="p-4 text-center">Periode 6<br><span class="text-xs text-slate-400">10 Jan - 9 Feb</span></th>
+                                <th class="p-4 text-center">Selesai Magang<br><span class="text-xs text-slate-400">10 Feb (Gajian)</span></th>
                             </tr>
                         </thead>
                         <tbody id="rekapTableBody" class="divide-y divide-slate-700/50">
@@ -186,27 +186,27 @@
             </div>
         </section>
 
-        <!-- 2. TABEL GRAND TOTAL 6 BULAN (TARGET VS REALISASI) -->
+        <!-- 2. TABEL GRAND TOTAL PERIODE -->
         <section id="grand-total-section" class="mb-12">
-            <h3 class="text-2xl font-bold text-teal-400 mb-2">Grand Total Rekap 6 Bulan (Target vs Realisasi)</h3>
-            <p class="text-slate-400 text-sm mb-6">Tabel rekap utama akumulasi magang dari September sampai Februari menembus angka 36 juta.</p>
+            <h3 class="text-2xl font-bold text-teal-400 mb-2">Grand Total Rekap Periode (Target vs Realisasi)</h3>
+            <p class="text-slate-400 text-sm mb-6">Tabel rekap utama akumulasi magang dari Periode 2 sampai Selesai Magang.</p>
 
             <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-xl">
                 <div class="overflow-x-auto">
                     <table class="w-full text-center border-collapse text-sm">
                         <thead>
                             <tr class="bg-slate-700 text-slate-200 border-b border-slate-600">
-                                <th rowspan="2" class="p-3 border-r border-slate-600">Periode</th>
+                                <th rowspan="2" class="p-3 border-r border-slate-600">No</th>
                                 <th colspan="3" class="p-2 bg-sky-600/40 text-sky-300 border-r border-slate-600">Target</th>
                                 <th colspan="3" class="p-2 bg-emerald-600/40 text-emerald-300">Realisasi</th>
                             </tr>
                             <tr class="bg-slate-700/80 text-xs text-slate-300 border-b border-slate-600">
-                                <th class="p-2 border-r border-slate-600">Bulan</th>
-                                <th class="p-2 border-r border-slate-600">Keluar/Bln</th>
-                                <th class="p-2 border-r border-slate-600">Masuk/Bln</th>
-                                <th class="p-2 border-r border-slate-600">Bulan</th>
-                                <th class="p-2 border-r border-slate-600">Keluar/Bln</th>
-                                <th class="p-2">Masuk/Bln</th>
+                                <th class="p-2 border-r border-slate-600">Periode Magang</th>
+                                <th class="p-2 border-r border-slate-600">Keluar/Periode</th>
+                                <th class="p-2 border-r border-slate-600">Masuk/Periode</th>
+                                <th class="p-2 border-r border-slate-600">Periode Magang</th>
+                                <th class="p-2 border-r border-slate-600">Keluar/Periode</th>
+                                <th class="p-2">Masuk/Periode</th>
                             </tr>
                         </thead>
                         <tbody id="grandTableBody" class="divide-y divide-slate-700/50 text-xs md:text-sm">
@@ -225,7 +225,7 @@
     </footer>
 
     <script>
-        const bulananList = ["September", "Oktober", "November", "Desember", "Januari", "Februari"];
+        const periodeList = ["Periode 2", "Periode 3", "Periode 4", "Periode 5", "Periode 6", "Selesai Magang"];
         
         const hariBulan = {
             "September": 30,
@@ -233,17 +233,53 @@
             "November": 30,
             "Desember": 31,
             "Januari": 31,
-            "Februari": 10
+            "Februari": 28
         };
 
-        let dbHarian = JSON.parse(localStorage.getItem('db_harian_magang_v13')) || {};
-        let dbBulanan = JSON.parse(localStorage.getItem('db_bulanan_magang_v13')) || {
-            "September": {pemasukan: 5999443, kos: 1000000, galon: 10000, kuota: 75000, token: 3},
-            "Oktober": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0},
-            "November": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0},
-            "Desember": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0},
-            "Januari": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0},
-            "Februari": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0}
+        function getPeriodeByDate(bulan, tgl) {
+            tgl = parseInt(tgl);
+            if (bulan === "September") {
+                return tgl >= 10 ? "Periode 2" : null;
+            } else if (bulan === "Oktober") {
+                return tgl <= 9 ? "Periode 2" : "Periode 3";
+            } else if (bulan === "November") {
+                return tgl <= 9 ? "Periode 3" : "Periode 4";
+            } else if (bulan === "Desember") {
+                return tgl <= 9 ? "Periode 4" : "Periode 5";
+            } else if (bulan === "Januari") {
+                return tgl <= 9 ? "Periode 5" : "Periode 6";
+            } else if (bulan === "Februari") {
+                if (tgl <= 9) return "Periode 6";
+                if (tgl === 10) return "Selesai Magang";
+                return null;
+            }
+            return null;
+        }
+
+        // Data default lengkap September tgl 1 s.d. 12 dari Excel
+        const defaultSeptemberData = {
+            "September_1": {pagi: 5000, siang: 16000, malam: 13000, jajan: 7000, lain: 0},
+            "September_2": {pagi: 9000, siang: 15000, malam: 14000, jajan: 8000, lain: 0},
+            "September_3": {pagi: 0, siang: 10000, malam: 14000, jajan: 0, lain: 0},
+            "September_4": {pagi: 21000, siang: 13000, malam: 16000, jajan: 8000, lain: 52000},
+            "September_5": {pagi: 0, siang: 0, malam: 21600, jajan: 0, lain: 75000},
+            "September_6": {pagi: 0, siang: 16500, malam: 28000, jajan: 8000, lain: 51500},
+            "September_7": {pagi: 6000, siang: 23000, malam: 17000, jajan: 0, lain: 0},
+            "September_8": {pagi: 0, siang: 14000, malam: 17000, jajan: 18000, lain: 0},
+            "September_9": {pagi: 10000, siang: 17500, malam: 12000, jajan: 13000, lain: 0},
+            "September_10": {pagi: 7500, siang: 13000, malam: 23000, jajan: 5000, lain: 63000},
+            "September_11": {pagi: 35500, siang: 10000, malam: 12000, jajan: 18000, lain: 67000},
+            "September_12": {pagi: 0, siang: 13000, malam: 0, jajan: 0, lain: 35000}
+        };
+
+        let dbHarian = JSON.parse(localStorage.getItem('db_harian_magang_v21')) || defaultSeptemberData;
+        let dbPeriode = JSON.parse(localStorage.getItem('db_periode_magang_v21')) || {
+            "Periode 2": {pemasukan: 5999443, kos: 1000000, galon: 10000, kuota: 75000, token: 3},
+            "Periode 3": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0},
+            "Periode 4": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0},
+            "Periode 5": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0},
+            "Periode 6": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0},
+            "Selesai Magang": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0}
         };
 
         function updateDateDropdown() {
@@ -253,6 +289,8 @@
             let maxHari = hariBulan[bulan] || 30;
             let selectTgl = document.getElementById('selectTgl');
             if(!selectTgl) return;
+            
+            let currentSelectedTgl = selectTgl.value;
             selectTgl.innerHTML = '';
             for(let i=1; i<=maxHari; i++) {
                 let opt = document.createElement('option');
@@ -260,31 +298,34 @@
                 opt.innerText = `Tanggal ${i}`;
                 selectTgl.appendChild(opt);
             }
+            if(currentSelectedTgl && currentSelectedTgl <= maxHari) {
+                selectTgl.value = currentSelectedTgl;
+            }
         }
 
         function getKey(bulan, tgl) {
             return `${bulan}_${tgl}`;
         }
 
-        function loadMonthlyParams() {
-            let bulanEl = document.getElementById('selectBulanParam');
-            if(!bulanEl) return;
-            let bulan = bulanEl.value;
-            let dataBulan = dbBulanan[bulan] || {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0};
+        function loadPeriodeParams() {
+            let periodeEl = document.getElementById('selectPeriodeParam');
+            if(!periodeEl) return;
+            let pName = periodeEl.value;
+            let dataP = dbPeriode[pName] || {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0};
 
-            document.getElementById('inPemasukan').value = dataBulan.pemasukan;
-            document.getElementById('inKos').value = dataBulan.kos;
-            document.getElementById('inGalon').value = dataBulan.galon;
-            document.getElementById('inKuota').value = dataBulan.kuota;
-            document.getElementById('inToken').value = dataBulan.token;
+            document.getElementById('inPemasukan').value = dataP.pemasukan;
+            document.getElementById('inKos').value = dataP.kos;
+            document.getElementById('inGalon').value = dataP.galon;
+            document.getElementById('inKuota').value = dataP.kuota;
+            document.getElementById('inToken').value = dataP.token;
             recalculateAll();
         }
 
-        function saveMonthlyParams() {
-            let bulanEl = document.getElementById('selectBulanParam');
-            if(!bulanEl) return;
-            let bulan = bulanEl.value;
-            dbBulanan[bulan] = {
+        function savePeriodeParams() {
+            let periodeEl = document.getElementById('selectPeriodeParam');
+            if(!periodeEl) return;
+            let pName = periodeEl.value;
+            dbPeriode[pName] = {
                 pemasukan: parseFloat(document.getElementById('inPemasukan').value) || 0,
                 kos: parseFloat(document.getElementById('inKos').value) || 0,
                 galon: parseFloat(document.getElementById('inGalon').value) || 0,
@@ -292,7 +333,7 @@
                 token: parseFloat(document.getElementById('inToken').value) || 0
             };
 
-            localStorage.setItem('db_bulanan_magang_v13', JSON.stringify(dbBulanan));
+            localStorage.setItem('db_periode_magang_v21', JSON.stringify(dbPeriode));
             recalculateAll();
         }
 
@@ -328,7 +369,7 @@
                 lain: parseFloat(document.getElementById('inputLain').value) || 0
             };
 
-            localStorage.setItem('db_harian_magang_v13', JSON.stringify(dbHarian));
+            localStorage.setItem('db_harian_magang_v21', JSON.stringify(dbHarian));
             recalculateAll();
             alert(`Pengeluaran tgl ${tgl} (${bulan}) berhasil disimpan & disinkronkan bro! 🗿`);
         }
@@ -340,112 +381,135 @@
         function recalculateAll() {
             let rekapMakan = {};
             let rekapLain = {};
-            let totalKeluarPerBulan = {};
-            let totalMasukPerBulan = {};
-            let sisaBersihPerBulan = {};
+            let totalKeluarPerPeriode = {};
+            let totalMasukPerPeriode = {};
+            let sisaBersihPerPeriode = {};
 
             let targetKeluarTotal = 0;
             let targetMasukTotal = 0;
             let realKeluarTotal = 0;
             let realMasukTotal = 0;
 
-            bulananList.forEach(b => {
-                rekapMakan[b] = 0;
-                rekapLain[b] = 0;
-                let maxH = hariBulan[b];
-                for(let i=1; i<=maxH; i++) {
-                    let k = getKey(b, i);
-                    if(dbHarian[k]) {
-                        rekapMakan[b] += (dbHarian[k].pagi + dbHarian[k].siang + dbHarian[k].malam + dbHarian[k].jajan);
-                        rekapLain[b] += dbHarian[k].lain;
-                    }
-                }
-                let param = dbBulanan[b] || {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0};
-                totalMasukPerBulan[b] = param.pemasukan;
-                let listrikVal = param.token * 50000;
-                
-                let realKeluar = rekapMakan[b] + rekapLain[b] + param.kos + param.galon + param.kuota + listrikVal;
-                totalKeluarPerBulan[b] = realKeluar;
-                sisaBersihPerBulan[b] = totalMasukPerBulan[b] - realKeluar;
-
-                let targetKeluarBln = (b === 'Februari') ? 0 : 2735000;
-                let targetMasukBln = totalMasukPerBulan[b];
-
-                targetKeluarTotal += targetKeluarBln;
-                targetMasukTotal += targetMasukBln;
-                realKeluarTotal += realKeluar;
-                realMasukTotal += totalMasukPerBulan[b];
+            periodeList.forEach(p => {
+                rekapMakan[p] = 0;
+                rekapLain[p] = 0;
             });
 
-            // 1. Render Tabel Rinci
+            const listBulanKalender = ["September", "Oktober", "November", "Desember", "Januari", "Februari"];
+            listBulanKalender.forEach(b => {
+                let maxH = hariBulan[b];
+                for(let i=1; i<=maxH; i++) {
+                    let pTarget = getPeriodeByDate(b, i);
+                    if(pTarget && periodeList.includes(pTarget)) {
+                        let k = getKey(b, i);
+                        if(dbHarian[k]) {
+                            rekapMakan[pTarget] += (dbHarian[k].pagi + dbHarian[k].siang + dbHarian[k].malam + dbHarian[k].jajan);
+                            rekapLain[pTarget] += dbHarian[k].lain;
+                        }
+                    }
+                }
+            });
+
+            periodeList.forEach(p => {
+                let param = dbPeriode[p] || {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0};
+                totalMasukPerPeriode[p] = param.pemasukan;
+                
+                let realKeluar = 0;
+                if(p !== "Selesai Magang") {
+                    let listrikVal = param.token * 50000;
+                    realKeluar = rekapMakan[p] + rekapLain[p] + param.kos + param.galon + param.kuota + listrikVal;
+                }
+
+                totalKeluarPerPeriode[p] = realKeluar;
+                sisaBersihPerPeriode[p] = totalMasukPerPeriode[p] - realKeluar;
+
+                let targetKeluarP = (p === "Selesai Magang") ? 0 : 2735000;
+                let targetMasukP = totalMasukPerPeriode[p];
+
+                targetKeluarTotal += targetKeluarP;
+                targetMasukTotal += targetMasukP;
+                realKeluarTotal += realKeluar;
+                realMasukTotal += totalMasukPerPeriode[p];
+            });
+
+            // 1. Render Tabel Rinci per Periode
             let tbodyRinci = document.getElementById('rekapTableBody');
             if(tbodyRinci) {
                 tbodyRinci.innerHTML = `
                     <tr class="bg-teal-950/30 font-bold">
                         <td class="p-4 text-teal-300">TOTAL PEMASUKAN (*Pemasukan)</td>
                         <td class="p-4 text-center text-amber-300">-</td>
-                        ${bulananList.map(b => `<td class="p-4 text-center text-teal-400">${formatIDR(totalMasukPerBulan[b])}</td>`).join('')}
+                        ${periodeList.map(p => `<td class="p-4 text-center text-teal-400">${formatIDR(totalMasukPerPeriode[p])}</td>`).join('')}
                     </tr>
                     <tr>
                         <td class="p-4 font-medium">Makan (Pagi+Siang+Malam+Jajan)</td>
                         <td class="p-4 text-center bg-amber-500/5 font-semibold text-amber-300">Rp 1.500.000</td>
-                        ${bulananList.map(b => `<td class="p-4 text-center font-bold text-slate-200">${formatIDR(rekapMakan[b])}</td>`).join('')}
+                        ${periodeList.map(p => `<td class="p-4 text-center font-bold text-slate-200">${p === "Selesai Magang" ? "Rp 0" : formatIDR(rekapMakan[p])}</td>`).join('')}
                     </tr>
                     <tr>
                         <td class="p-4 font-medium">*Kos</td>
                         <td class="p-4 text-center bg-amber-500/5 font-semibold text-amber-300">Rp 1.000.000</td>
-                        ${bulananList.map(b => `<td class="p-4 text-center font-bold text-slate-200">${formatIDR(dbBulanan[b]?.kos || 0)}</td>`).join('')}
+                        ${periodeList.map(p => `<td class="p-4 text-center font-bold text-slate-200">${p === "Selesai Magang" ? "Rp 0" : formatIDR(dbPeriode[p]?.kos || 0)}</td>`).join('')}
                     </tr>
                     <tr>
                         <td class="p-4 font-medium">Listrik (Token x 50k)</td>
                         <td class="p-4 text-center bg-amber-500/5 font-semibold text-amber-300">Rp 150.000</td>
-                        ${bulananList.map(b => `<td class="p-4 text-center font-bold text-slate-200">${formatIDR((dbBulanan[b]?.token || 0) * 50000)}</td>`).join('')}
+                        ${periodeList.map(p => `<td class="p-4 text-center font-bold text-slate-200">${p === "Selesai Magang" ? "Rp 0" : formatIDR((dbPeriode[p]?.token || 0) * 50000)}</td>`).join('')}
                     </tr>
                     <tr>
                         <td class="p-4 font-medium">*Galon</td>
                         <td class="p-4 text-center bg-amber-500/5 font-semibold text-amber-300">Rp 10.000</td>
-                        ${bulananList.map(b => `<td class="p-4 text-center font-bold text-slate-200">${formatIDR(dbBulanan[b]?.galon || 0)}</td>`).join('')}
+                        ${periodeList.map(p => `<td class="p-4 text-center font-bold text-slate-200">${p === "Selesai Magang" ? "Rp 0" : formatIDR(dbPeriode[p]?.galon || 0)}</td>`).join('')}
                     </tr>
                     <tr>
                         <td class="p-4 font-medium">*Kuota</td>
                         <td class="p-4 text-center bg-amber-500/5 font-semibold text-amber-300">Rp 75.000</td>
-                        ${bulananList.map(b => `<td class="p-4 text-center font-bold text-slate-200">${formatIDR(dbBulanan[b]?.kuota || 0)}</td>`).join('')}
+                        ${periodeList.map(p => `<td class="p-4 text-center font-bold text-slate-200">${p === "Selesai Magang" ? "Rp 0" : formatIDR(dbPeriode[p]?.kuota || 0)}</td>`).join('')}
                     </tr>
                     <tr>
                         <td class="p-4 font-medium">*Lain-lain</td>
                         <td class="p-4 text-center bg-amber-500/5 font-semibold text-amber-300">-</td>
-                        ${bulananList.map(b => `<td class="p-4 text-center font-bold text-slate-200">${formatIDR(rekapLain[b])}</td>`).join('')}
+                        ${periodeList.map(p => `<td class="p-4 text-center font-bold text-slate-200">${p === "Selesai Magang" ? "Rp 0" : formatIDR(rekapLain[p])}</td>`).join('')}
                     </tr>
                     <tr class="bg-rose-950/20 font-bold">
                         <td class="p-4 text-rose-300">TOTAL KELUAR</td>
                         <td class="p-4 text-center text-amber-300">Rp 2.735.000+</td>
-                        ${bulananList.map(b => `<td class="p-4 text-center text-rose-400">${formatIDR(totalKeluarPerBulan[b])}</td>`).join('')}
+                        ${periodeList.map(p => `<td class="p-4 text-center text-rose-400">${formatIDR(totalKeluarPerPeriode[p])}</td>`).join('')}
                     </tr>
                     <tr class="bg-purple-950/30 font-extrabold text-base">
                         <td class="p-4 text-purple-300">SISA BERSIH (Pemasukan - Keluar)</td>
                         <td class="p-4 text-center text-amber-300">-</td>
-                        ${bulananList.map(b => `<td class="p-4 text-center text-teal-300">${formatIDR(sisaBersihPerBulan[b])}</td>`).join('')}
+                        ${periodeList.map(p => `<td class="p-4 text-center text-teal-300">${formatIDR(sisaBersihPerPeriode[p])}</td>`).join('')}
                     </tr>
                 `;
             }
 
-            // 2. Render Tabel Grand Total
+            // 2. Render Tabel Grand Total Periode
             let tbodyGrand = document.getElementById('grandTableBody');
             if(tbodyGrand) {
                 let rowsHtml = '';
-                bulananList.forEach((b, idx) => {
-                    let targetK = (b === 'Februari') ? 0 : 2735000;
-                    let targetM = totalMasukPerBulan[b];
-                    let realK = totalKeluarPerBulan[b];
-                    let realM = totalMasukPerBulan[b];
+                const namaPeriodeLabel = [
+                    "Periode 2 (10 Sep - 9 Okt)",
+                    "Periode 3 (10 Okt - 9 Nov)",
+                    "Periode 4 (10 Nov - 9 Des)",
+                    "Periode 5 (10 Des - 9 Jan)",
+                    "Periode 6 (10 Jan - 9 Feb)",
+                    "Selesai Magang (10 Feb)"
+                ];
+
+                periodeList.forEach((p, idx) => {
+                    let targetK = (p === "Selesai Magang") ? 0 : 2735000;
+                    let targetM = totalMasukPerPeriode[p];
+                    let realK = totalKeluarPerPeriode[p];
+                    let realM = totalMasukPerPeriode[p];
 
                     rowsHtml += `
                         <tr class="hover:bg-slate-800/50 transition">
                             <td class="p-2.5 font-bold border-r border-slate-700">${idx + 1}</td>
-                            <td class="p-2.5 border-r border-slate-700 text-slate-300">${b}</td>
+                            <td class="p-2.5 border-r border-slate-700 text-slate-300">${namaPeriodeLabel[idx]}</td>
                             <td class="p-2.5 border-r border-slate-700 text-amber-300 font-medium">${formatIDR(targetK)}</td>
                             <td class="p-2.5 border-r border-slate-700 text-teal-300 font-medium">${formatIDR(targetM)}</td>
-                            <td class="p-2.5 border-r border-slate-700 text-slate-300">${b}</td>
+                            <td class="p-2.5 border-r border-slate-700 text-slate-300">${namaPeriodeLabel[idx]}</td>
                             <td class="p-2.5 border-r border-slate-700 text-rose-300 font-medium">${formatIDR(realK)}</td>
                             <td class="p-2.5 text-teal-300 font-medium">${formatIDR(realM)}</td>
                         </tr>
@@ -473,18 +537,17 @@
                 tbodyGrand.innerHTML = rowsHtml;
             }
 
-            let currentBulanEl = document.getElementById('selectBulanParam');
-            if(currentBulanEl) {
-                let currentSelectedBulan = currentBulanEl.value;
-                document.getElementById('dispPemasukan').innerText = formatIDR(totalMasukPerBulan[currentSelectedBulan]);
-                document.getElementById('dispTotalKeluar').innerText = formatIDR(totalKeluarPerBulan[currentSelectedBulan]);
-                document.getElementById('dispBersih').innerText = formatIDR(sisaBersihPerBulan[currentSelectedBulan]);
+            let currentPeriodeParam = document.getElementById('selectPeriodeParam').value;
+            if(currentPeriodeParam) {
+                document.getElementById('dispPemasukan').innerText = formatIDR(totalMasukPerPeriode[currentPeriodeParam]);
+                document.getElementById('dispTotalKeluar').innerText = formatIDR(totalKeluarPerPeriode[currentPeriodeParam]);
+                document.getElementById('dispBersih').innerText = formatIDR(sisaBersihPerPeriode[currentPeriodeParam]);
             }
         }
 
         window.onload = function() {
             updateDateDropdown();
-            loadMonthlyParams();
+            loadPeriodeParams();
             loadFormDate();
             recalculateAll();
         };
