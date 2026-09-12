@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Dashboard | Bagus A</title>
+    <title>Financial Dashboard | Bagus Arda</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         ::-webkit-scrollbar { width: 8px; }
@@ -17,7 +17,8 @@
     <nav class="p-5 flex flex-col md:flex-row justify-between items-center w-11/12 max-w-[1400px] mx-auto border-b border-slate-800 sticky top-0 bg-slate-900/90 backdrop-blur z-50">
         <h1 class="text-xl font-bold text-teal-400 mb-4 md:mb-0">Financial<span class="text-white"> Dashboard</span></h1>
         <div class="flex items-center gap-4 text-sm md:text-base">
-            <span id="syncStatus" class="text-xs px-2 py-1 rounded bg-amber-500/20 text-amber-300">Menghubungkan ke GitHub...</span>
+            <button onclick="setTokenManual()" id="btnToken" class="text-xs px-2.5 py-1 rounded bg-teal-500/20 text-teal-300 hover:bg-teal-500/30 transition">⚙️ Set Token</button>
+            <span id="syncStatus" class="text-xs px-2 py-1 rounded bg-amber-500/20 text-amber-300">Menghubungkan...</span>
             <a href="#input-section" class="hover:text-teal-400 transition">Input</a>
             <a href="#target-section" class="hover:text-teal-400 transition">Rekap</a>
             <a href="#grand-total-section" class="hover:text-teal-400 transition">Grand Total</a>
@@ -29,16 +30,16 @@
         
         <!-- Header -->
         <div class="mb-10 text-center md:text-left">
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Dashboard Finance <span class="text-teal-400">Sistem Periode Magang</span></h2>
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Dashboard Magang <span class="text-teal-400">Sinkronisasi Cloud Gist</span></h2>
             <p class="text-slate-400 text-sm md:text-base">
-                Pilih bulan kalender dan tanggal, input pengeluaran harian, atur parameter per periode (Periode 2 s.d. Selesai Magang)
+                Data otomatis tersimpan aman di GitHub Gist secara real-time tanpa download file.
             </p>
         </div>
 
         <!-- Setting Parameter Manual per Periode Magang -->
         <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl mb-10">
             <h3 class="text-xl font-bold text-teal-400 mb-4 flex items-center justify-between">
-                <span>Parameter Periode Magang</span>
+                <span>Parameter Periode Magang (*Field Manual per Periode)</span>
                 <span class="text-xs bg-teal-400/10 text-teal-400 px-2.5 py-1 rounded">Gaji Terakhir Tanpa Pengeluaran</span>
             </h3>
 
@@ -226,9 +227,21 @@
     </footer>
 
     <script>
-        // Konfigurasi GitHub Gist API
         const GIST_ID = "1b98ede4aa036c5876d86afb9dc4cce7";
-        const GITHUB_TOKEN = "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";
+        
+        function getToken() {
+            return localStorage.getItem("github_token_finance") || "";
+        }
+
+        function setTokenManual() {
+            let current = getToken();
+            let input = prompt("Masukkan GitHub Personal Access Token (PAT) lo:", current);
+            if(input !== null) {
+                localStorage.setItem("github_token_finance", input.trim());
+                alert("Token berhasil disimpan di browser lo! 🗿");
+                fetchFromGist();
+            }
+        }
 
         const periodeList = ["Periode 2", "Periode 3", "Periode 4", "Periode 5", "Periode 6", "Selesai Magang"];
         
@@ -286,12 +299,20 @@
             "Selesai Magang": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0}
         };
 
-        // Fungsi Load Data dari GitHub Gist
         async function fetchFromGist() {
             let statusEl = document.getElementById('syncStatus');
+            let token = getToken();
+            if(!token) {
+                statusEl.innerText = "Token Belum Diset";
+                statusEl.className = "text-xs px-2 py-1 rounded bg-amber-500/20 text-amber-300";
+                // Otomatis minta token kalau belum ada
+                setTokenManual();
+                return;
+            }
+
             try {
                 let response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
-                    headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
+                    headers: { 'Authorization': `token ${token}` }
                 });
                 if(!response.ok) throw new Error("Gagal mengambil data dari GitHub");
                 let data = await response.json();
@@ -308,7 +329,7 @@
                 statusEl.className = "text-xs px-2 py-1 rounded bg-emerald-500/20 text-emerald-300";
             } catch(err) {
                 console.error(err);
-                statusEl.innerText = "Mode Offline (Gagal Sync)";
+                statusEl.innerText = "Gagal Sync (Cek Token)";
                 statusEl.className = "text-xs px-2 py-1 rounded bg-rose-500/20 text-rose-300";
                 dbHarian = defaultSeptemberData;
             }
@@ -318,10 +339,15 @@
             recalculateAll();
         }
 
-        // Fungsi Simpan Data ke GitHub Gist
         async function saveToGist() {
+            let token = getToken();
+            if(!token) {
+                setTokenManual();
+                return;
+            }
+
             let statusEl = document.getElementById('syncStatus');
-            statusEl.innerText = "Menyimpan ke GitHub...";
+            statusEl.innerText = "Menyimpan...";
             statusEl.className = "text-xs px-2 py-1 rounded bg-amber-500/20 text-amber-300";
 
             let payload = {
@@ -333,7 +359,7 @@
                 let response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
                     method: 'PATCH',
                     headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Authorization': `token ${token}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
@@ -345,14 +371,14 @@
                     })
                 });
 
-                if(!response.ok) throw new Error("Gagal menyimpan ke GitHub");
+                if(!response.ok) throw new Error("Gagal menyimpan");
                 statusEl.innerText = "Tersinkron dengan GitHub";
                 statusEl.className = "text-xs px-2 py-1 rounded bg-emerald-500/20 text-emerald-300";
             } catch(err) {
                 console.error(err);
-                statusEl.innerText = "Gagal Menyimpan ke Cloud!";
+                statusEl.innerText = "Gagal Simpan!";
                 statusEl.className = "text-xs px-2 py-1 rounded bg-rose-500/20 text-rose-300";
-                alert("Gagal menyimpan ke GitHub Gist. Periksa koneksi internet / token lo bro!");
+                alert("Gagal menyimpan ke Gist. Cek token lo bro!");
             }
         }
 
@@ -445,7 +471,7 @@
 
             saveToGist();
             recalculateAll();
-            alert(`Pengeluaran tgl ${tgl} (${bulan}) berhasil disimpan ke Cloud GitHub! 🗿`);
+            alert(`Pengeluaran tgl ${tgl} (${bulan}) berhasil disimpan ke Cloud Gist! 🗿`);
         }
 
         function formatIDR(num) {
@@ -506,7 +532,6 @@
                 realMasukTotal += totalMasukPerPeriode[p];
             });
 
-            // 1. Render Tabel Rinci per Periode
             let tbodyRinci = document.getElementById('rekapTableBody');
             if(tbodyRinci) {
                 tbodyRinci.innerHTML = `
@@ -558,7 +583,6 @@
                 `;
             }
 
-            // 2. Render Tabel Grand Total Periode
             let tbodyGrand = document.getElementById('grandTableBody');
             if(tbodyGrand) {
                 let rowsHtml = '';
