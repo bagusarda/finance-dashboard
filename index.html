@@ -54,28 +54,29 @@
                 </select>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm mb-4">
                 <div>
                     <label class="block text-slate-400 mb-1">Pemasukan (*):</label>
-                    <input type="number" id="inPemasukan" value="5999443" oninput="savePeriodeParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
+                    <input type="number" id="inPemasukan" oninput="updatePeriodeLive()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-slate-400 mb-1">Kos (*):</label>
-                    <input type="number" id="inKos" value="0" oninput="savePeriodeParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
+                    <input type="number" id="inKos" oninput="updatePeriodeLive()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-slate-400 mb-1">Galon (*):</label>
-                    <input type="number" id="inGalon" value="0" oninput="savePeriodeParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
+                    <input type="number" id="inGalon" oninput="updatePeriodeLive()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-slate-400 mb-1">Kuota (*):</label>
-                    <input type="number" id="inKuota" value="0" oninput="savePeriodeParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
+                    <input type="number" id="inKuota" oninput="updatePeriodeLive()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-slate-400 mb-1">Token Listrik (Jml):</label>
-                    <input type="number" id="inToken" value="0" oninput="savePeriodeParams()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
+                    <input type="number" id="inToken" oninput="updatePeriodeLive()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-teal-400 font-bold focus:border-teal-400 outline-none">
                 </div>
             </div>
+            <button onclick="savePeriodeParams()" class="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold px-4 py-2 rounded-lg text-sm transition">Simpan & Download Update Parameter Periode Ini</button>
         </div>
 
         <!-- Menu Input Harian & Ringkasan -->
@@ -282,7 +283,6 @@
             "Selesai Magang": {pemasukan: 5999443, kos: 0, galon: 0, kuota: 0, token: 0}
         };
 
-        // Fungsi Load Data dari file data.json di repository
         async function loadData() {
             let statusEl = document.getElementById('syncStatus');
             try {
@@ -308,7 +308,6 @@
             recalculateAll();
         }
 
-        // Fungsi untuk mengunduh file JSON data terbaru (agar bisa di-update manual/otomatis ke repo)
         function downloadDataJSON() {
             let payload = { harian: dbHarian, periode: dbPeriode };
             let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
@@ -359,7 +358,7 @@
             recalculateAll();
         }
 
-        function savePeriodeParams() {
+        function updatePeriodeLive() {
             let periodeEl = document.getElementById('selectPeriodeParam');
             if(!periodeEl) return;
             let pName = periodeEl.value;
@@ -371,6 +370,12 @@
                 token: parseFloat(document.getElementById('inToken').value) || 0
             };
             recalculateAll();
+        }
+
+        function savePeriodeParams() {
+            updatePeriodeLive();
+            downloadDataJSON();
+            alert(`Parameter untuk ${document.getElementById('selectPeriodeParam').value} berhasil disimpan!\nFile 'data.json' otomatis ter-download. Update file tersebut di repository GitHub lo ya bro! 🗿`);
         }
 
         function loadFormDate() {
@@ -406,10 +411,8 @@
             };
 
             recalculateAll();
-            
-            // Otomatis download file data.json terbaru agar bisa langsung di-upload/drag-drop ke repository GitHub
             downloadDataJSON();
-            alert(`Pengeluaran tgl ${tgl} (${bulan}) berhasil disimpan!\nFile 'data.json' otomatis ter-download. Silakan update/timpa file 'data.json' tersebut di repository GitHub lo agar tersinkron lintas perangkat! 🗿`);
+            alert(`Pengeluaran tgl ${tgl} (${bulan}) berhasil disimpan!\nFile 'data.json' otomatis ter-download untuk di-update ke GitHub repository. 🗿`);
         }
 
         function formatIDR(num) {
